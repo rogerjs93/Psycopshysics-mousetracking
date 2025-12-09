@@ -8,7 +8,7 @@ A standalone application for analyzing psychophysics tracking data from blob tra
 
 ### Windows Executable (No Python Required)
 
-1. **Download** [`TrackingAnalysis.rar`](dist/TrackingAnalysis.rar) from this repository
+1. **Download** [`TrackingAnalysis.rar`](TrackingAnalysis.rar) from this repository
 2. **Extract** the RAR file to any folder
 3. **Run** `TrackingAnalysis.exe`
 4. Your browser will open automatically at `http://localhost:8501`
