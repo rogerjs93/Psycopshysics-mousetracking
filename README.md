@@ -6,7 +6,7 @@ A standalone application for analyzing psychophysics tracking data from blob tra
 
 ## 📥 Download & Install
 
-### Windows Executable (No Python Required!)
+### Windows Executable (No Python Required)
 
 1. **Download** [`TrackingAnalysis.rar`](dist/TrackingAnalysis.rar) from this repository
 2. **Extract** the RAR file to any folder
@@ -25,17 +25,6 @@ A standalone application for analyzing psychophysics tracking data from blob tra
 - **Statistical analysis** - Mann-Whitney U, Kruskal-Wallis, Spearman correlations
 - **Rich visualizations** - Interactive plots, heatmaps, animated replays
 - **Export results** - JSON and Markdown reports
-
----
-
-## 📊 Research Questions
-
-This tool helps answer:
-
-1. Does auditory feedback improve tracking accuracy? (dynamic vs static)
-2. Can observers discriminate blobs with different SD sizes? (21, 31, 34 arcmin)
-3. Is tracking predictive or reactive? (cross-correlation lag analysis)
-4. Are there individual differences in tracking ability?
 
 ---
 
@@ -71,10 +60,6 @@ Participant_XXXX_Tracking_blob_experiment_XXarcmin_vX_static.csv
 ## 📝 License
 
 MIT License
-
-## 👥 Authors
-
-Psychophysics and Reaction Time Methods - Group Project
 
 ---
 
