@@ -1,0 +1,113 @@
+# Research Questions Configuration
+# =================================
+# Define the research questions to be answered by the analysis.
+# Each question specifies which metrics and thresholds determine success.
+#
+# Structure:
+#   - id: Unique identifier for the question
+#   - text: Human-readable question text
+#   - description: Detailed explanation of what we're measuring
+#   - metric: Which metric to use (rmse, correlation, lag, etc.)
+#   - condition_filter: Which data subset to analyze
+#   - logic: Comparison logic (supports AND/OR for expandability)
+#   - threshold: Numeric threshold for success determination
+#   - interpretation: How to interpret the results
+
+questions:
+  - id: q1
+    text: "Can observers discriminate (track) blobs with 21-pixel SD?"
+    description: >
+      Evaluates whether participants can successfully track the target blob
+      when visual noise has a standard deviation of 21 pixels. Lower SD means
+      clearer target visibility, making tracking potentially easier.
+    metric: rmse
+    condition_filter:
+      size: "21arcmin"
+    logic: "rmse < threshold"
+    threshold: 50
+    threshold_unit: "pixels"
+    interpretation:
+      success: "Observers CAN discriminate 21-pixel SD blobs (tracking error below threshold)"
+      failure: "Observers CANNOT reliably discriminate 21-pixel SD blobs (tracking error above threshold)"
+    compare_conditions: true  # Compare auditory feedback vs no feedback
+
+  - id: q2
+    text: "Can observers discriminate (track) blobs with 31-pixel SD?"
+    description: >
+      Evaluates tracking performance at medium visual noise level (31-pixel SD).
+      This represents an intermediate difficulty between 21 and 34 pixel conditions.
+    metric: rmse
+    condition_filter:
+      size: "31arcmin"
+    logic: "rmse < threshold"
+    threshold: 50
+    threshold_unit: "pixels"
+    interpretation:
+      success: "Observers CAN discriminate 31-pixel SD blobs (tracking error below threshold)"
+      failure: "Observers CANNOT reliably discriminate 31-pixel SD blobs (tracking error above threshold)"
+    compare_conditions: true
+
+  - id: q3
+    text: "Can observers discriminate (track) blobs with 34-pixel SD?"
+    description: >
+      Evaluates tracking performance at the highest visual noise level (34-pixel SD).
+      Higher SD means more visual noise, making the target harder to distinguish
+      and track accurately.
+    metric: rmse
+    condition_filter:
+      size: "34arcmin"
+    logic: "rmse < threshold"
+    threshold: 50
+    threshold_unit: "pixels"
+    interpretation:
+      success: "Observers CAN discriminate 34-pixel SD blobs (tracking error below threshold)"
+      failure: "Observers CANNOT reliably discriminate 34-pixel SD blobs (tracking error above threshold)"
+    compare_conditions: true
+
+# Additional analysis questions (cross-correlation based)
+  - id: q4
+    text: "Is tracking predictive or reactive across conditions?"
+    description: >
+      Uses cross-correlation analysis to determine if participants' tracking
+      movements anticipate (predict) or follow (react to) target movements.
+      Negative optimal lag = predictive, Positive optimal lag = reactive.
+    metric: optimal_lag
+    condition_filter: {}  # All conditions
+    logic: "lag != 0"
+    threshold: 0
+    threshold_unit: "frames"
+    interpretation:
+      negative_lag: "Tracking is PREDICTIVE - participants anticipate target movement"
+      positive_lag: "Tracking is REACTIVE - participants follow target movement"
+      zero_lag: "Tracking is SYNCHRONOUS - movements occur simultaneously"
+    compare_conditions: true
+
+  - id: q5
+    text: "Does auditory feedback improve tracking performance?"
+    description: >
+      Compares tracking accuracy (RMSE) between auditory feedback (dynamic)
+      and no feedback (static) conditions to assess if sound cues help tracking.
+    metric: rmse
+    condition_filter: {}  # Compare across feedback conditions
+    logic: "rmse_dynamic < rmse_static"
+    threshold: null  # Comparison-based, no fixed threshold
+    threshold_unit: null
+    interpretation:
+      success: "Auditory feedback IMPROVES tracking performance"
+      failure: "Auditory feedback does NOT improve tracking performance"
+    compare_conditions: true
+    comparison_type: "between_conditions"
+
+# Settings for question evaluation
+settings:
+  # Default significance level for statistical tests
+  alpha: 0.05
+  
+  # How to aggregate across participants
+  aggregation: "mean"  # Options: mean, median
+  
+  # Minimum number of participants for valid analysis
+  min_participants: 3
+  
+  # Whether to apply multiple comparison correction
+  multiple_comparison_correction: "bonferroni"  # Options: bonferroni, fdr, holm, none
